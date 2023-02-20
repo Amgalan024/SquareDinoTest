@@ -10,7 +10,7 @@ namespace Enemy
         [SerializeField] private EnemyModel _enemyModel;
         [SerializeField] private WayPointGoalModel _wayPointGoalModel;
 
-        private void Start()
+        private void Awake()
         {
             _enemyView.OnHit += HandleEnemyHit;
             _enemyModel.OnEnemyDied += HandleEnemyDeath;

@@ -6,7 +6,7 @@ namespace WayPoint
     {
         [SerializeField] private WayPointModel _wayPointModel;
 
-        private void Start()
+        private void Awake()
         {
             foreach (var wayPointGoal in _wayPointModel.WayPointGoals)
             {

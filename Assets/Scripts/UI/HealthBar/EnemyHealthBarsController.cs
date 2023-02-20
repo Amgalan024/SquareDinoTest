@@ -17,7 +17,7 @@ namespace UI
         private Dictionary<EnemyModel, Action<int>> _onHealthChangedSubscriptions;
         private Dictionary<EnemyModel, Action> _onEnemyDiedSubscriptions;
 
-        private void Start()
+        private void Awake()
         {
             _camera = Camera.main;
 
