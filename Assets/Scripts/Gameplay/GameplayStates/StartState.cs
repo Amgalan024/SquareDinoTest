@@ -8,9 +8,10 @@ namespace Gameplay.GameplayStates
     public class StartState : BaseGameplayState
     {
         [SerializeField] private StartScreen _startScreen;
-        [SerializeField] private PlayerModel _playerModel;
+        [SerializeField] private PlayerModel _playerPrefab;
         [SerializeField] private WayPointModel[] _wayPointModels;
 
+        private PlayerModel _playerModel;
         private WayPointModel _startWayPoint;
         private int _currentGameProgress;
         private int _totalGameProgress;
@@ -23,7 +24,9 @@ namespace Gameplay.GameplayStates
 
             _startWayPoint = _wayPointModels[0];
             _totalGameProgress = _wayPointModels.Length;
-
+            
+            _playerModel = Instantiate(_playerPrefab);
+            
             _playerModel.SetStartPosition(_startWayPoint.PlayerDestination.position);
         }
 

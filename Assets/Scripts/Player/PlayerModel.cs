@@ -11,10 +11,11 @@ namespace Player
         public event Action<Vector3> OnStartPositionSet;
         public event Action OnGoalsRefreshed;
 
+        [SerializeField] private float _rotationSpeed;
+        public float RotationSpeed => _rotationSpeed;
+
         public bool IsInputEnabled { get; set; }
-
         public Transform CurrentTarget { get; private set; }
-
         public WayPointGoalModel[] CurrentWayPointGoals { get; private set; }
 
         public void SetDestination(Vector3 destination)
@@ -29,7 +30,8 @@ namespace Player
 
         public void SetCurrentWayPointGoals(WayPointGoalModel[] wayPointGoalModels)
         {
-            CurrentWayPointGoals = wayPointGoalModels;
+            CurrentWayPointGoals = wayPointGoalModels
+                .OrderBy(w => (w.transform.position - transform.position).magnitude).ToArray();
 
             OnGoalsRefreshed?.Invoke();
         }

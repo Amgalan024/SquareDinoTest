@@ -15,7 +15,7 @@ namespace Player
 
         private List<WayPointGoalModel> _subscriptions = new List<WayPointGoalModel>();
 
-        private void Start()
+        private void Awake()
         {
             _playerModel.OnGoalsRefreshed += OnGoalsRefreshed;
             _playerModel.OnStartPositionSet += _playerView.SetPosition;
@@ -79,7 +79,8 @@ namespace Player
 
             lookRotation = Quaternion.Euler(new Vector3(playerEuler.x, lookRotationEuler.y, playerEuler.z));
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation,
+                Time.deltaTime * _playerModel.RotationSpeed);
         }
 
         private void HandleCameraPosition()
