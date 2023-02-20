@@ -31,12 +31,12 @@ namespace Player
 
             if (pooledProjectile == null)
             {
-                pooledProjectile = Instantiate(_projectilePrefab);
+                pooledProjectile = Instantiate(_projectilePrefab, transform);
 
                 _availableProjectiles.Add(pooledProjectile);
             }
 
-            pooledProjectile.GetFromPool();
+            pooledProjectile.TakeFromPool();
 
             return pooledProjectile;
         }

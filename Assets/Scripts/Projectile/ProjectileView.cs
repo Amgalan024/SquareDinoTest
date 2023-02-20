@@ -14,6 +14,11 @@ namespace Player
             OnHit?.Invoke(collision);
         }
 
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+        
         public void SetActive(bool value)
         {
             gameObject.SetActive(value);

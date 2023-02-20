@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
@@ -7,6 +6,7 @@ namespace Player
     {
         [SerializeField] private ProjectilePool _projectilePool;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private float _distanceMultiplierOnMiss = 25f;
 
         private Camera _camera;
 
@@ -19,11 +19,9 @@ namespace Player
         {
             var projectile = _projectilePool.GetProjectile();
 
-            projectile.transform.position = _shootPoint.position;
-
             var targetPosition = GetTargetPosition(touchPosition);
 
-            projectile.SetTarget(targetPosition);
+            projectile.SetupProjectile(_shootPoint.position, targetPosition);
         }
 
         private Vector3 GetTargetPosition(Vector3 touchPosition)
@@ -43,7 +41,7 @@ namespace Player
             }
             else
             {
-                direction = nearPosConverted + farPosConverted * 25;
+                direction = nearPosConverted + farPosConverted * _distanceMultiplierOnMiss;
             }
 
             return direction;

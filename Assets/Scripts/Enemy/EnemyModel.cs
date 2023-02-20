@@ -19,7 +19,7 @@ namespace Enemy
 
         private int _currentHealthPoints;
 
-        public void Start()
+        private void Start()
         {
             _currentHealthPoints = _healthPoints;
         }

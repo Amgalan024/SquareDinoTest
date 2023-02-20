@@ -14,14 +14,16 @@ namespace UI
         private Camera _camera;
 
         private Dictionary<EnemyModel, HealthBar> _enemyHealthBars;
-        private Dictionary<EnemyModel, Action<int>> _enemySubscriptions;
+        private Dictionary<EnemyModel, Action<int>> _onHealthChangedSubscriptions;
+        private Dictionary<EnemyModel, Action> _onEnemyDiedSubscriptions;
 
         private void Start()
         {
             _camera = Camera.main;
 
             _enemyHealthBars = new Dictionary<EnemyModel, HealthBar>(_enemyModels.Length);
-            _enemySubscriptions = new Dictionary<EnemyModel, Action<int>>(_enemyModels.Length);
+            _onHealthChangedSubscriptions = new Dictionary<EnemyModel, Action<int>>(_enemyModels.Length);
+            _onEnemyDiedSubscriptions = new Dictionary<EnemyModel, Action>(_enemyModels.Length);
 
             foreach (var enemyModel in _enemyModels)
             {
@@ -31,19 +33,27 @@ namespace UI
 
                 _enemyHealthBars.Add(enemyModel, healthBar);
 
-                Action<int> subscription = value => { HandleEnemyHealthChange(healthBar, value); };
+                Action<int> onHealthChanged = value => { HandleEnemyHealthChange(healthBar, value); };
+                Action onEnemyDied = () => { healthBar.SetActive(false); };
 
-                enemyModel.OnHealthChanged += subscription;
+                enemyModel.OnHealthChanged += onHealthChanged;
+                enemyModel.OnEnemyDied += onEnemyDied;
 
-                _enemySubscriptions.Add(enemyModel, subscription);
+                _onEnemyDiedSubscriptions.Add(enemyModel, onEnemyDied);
+                _onHealthChangedSubscriptions.Add(enemyModel, onHealthChanged);
             }
         }
 
         private void OnDestroy()
         {
-            foreach (var enemySubscription in _enemySubscriptions)
+            foreach (var enemySubscription in _onHealthChangedSubscriptions)
             {
                 enemySubscription.Key.OnHealthChanged -= enemySubscription.Value;
+            }
+
+            foreach (var enemySubscription in _onEnemyDiedSubscriptions)
+            {
+                enemySubscription.Key.OnEnemyDied -= enemySubscription.Value;
             }
         }
 
@@ -60,9 +70,9 @@ namespace UI
 
         private void SetHealthBarPosition(HealthBar healthBar, Transform worldSpaceAnchor)
         {
-            healthBar.transform.position = worldSpaceAnchor.position;
+            healthBar.SetPosition(worldSpaceAnchor.position);
 
-            healthBar.transform.LookAt(healthBar.transform.position + _camera.transform.forward);
+            healthBar.LookAt(healthBar.transform.position + _camera.transform.forward);
         }
 
         private void HandleEnemyHealthChange(HealthBar healthBar, int currentHealth)

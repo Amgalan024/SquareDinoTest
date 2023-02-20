@@ -12,7 +12,7 @@ namespace Enemy
         private RagDollPartView[] _ragDollParts;
         private Rigidbody[] _ragDollRigidbodies;
 
-        public void Start()
+        private void Start()
         {
             _ragDollParts = GetComponentsInChildren<RagDollPartView>();
             _ragDollRigidbodies = GetComponentsInChildren<Rigidbody>();
@@ -27,9 +27,12 @@ namespace Enemy
             SetRagDollRigidBodiesKinematic(true);
         }
 
-        private void OnBodyPartHit(Collision collision)
+        private void OnDestroy()
         {
-            OnHit?.Invoke(this, collision);
+            foreach (var bodyPart in _ragDollParts)
+            {
+                bodyPart.OnHit -= OnBodyPartHit;
+            }
         }
 
         public void PlayDeathAnimation()
@@ -37,6 +40,11 @@ namespace Enemy
             _animator.enabled = false;
 
             SetRagDollRigidBodiesKinematic(false);
+        }
+
+        private void OnBodyPartHit(Collision collision)
+        {
+            OnHit?.Invoke(this, collision);
         }
 
         private void SetRagDollRigidBodiesKinematic(bool value)

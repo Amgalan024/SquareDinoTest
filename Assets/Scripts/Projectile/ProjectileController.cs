@@ -9,18 +9,18 @@ namespace Player
         [SerializeField] private ProjectileView _projectileView;
 
         private Action _returnToPool;
-        private Action _getFromPool;
+        private Action _takeFromPool;
 
         private void Awake()
         {
-            _getFromPool = () => _projectileView.SetActive(true);
+            _takeFromPool = () => _projectileView.SetActive(true);
             _returnToPool = () => _projectileView.SetActive(false);
 
             _projectileView.OnHit += HandleHit;
 
-            _projectileModel.OnTargetSet += HandleTargetSet;
+            _projectileModel.OnProjectileSetup += HandleProjectileSetup;
 
-            _projectileModel.OnGotFromPool += _getFromPool;
+            _projectileModel.OnTakenFromPool += _takeFromPool;
             _projectileModel.OnReturnedToPool += _returnToPool;
         }
 
@@ -28,9 +28,9 @@ namespace Player
         {
             _projectileView.OnHit -= HandleHit;
 
-            _projectileModel.OnTargetSet -= HandleTargetSet;
+            _projectileModel.OnProjectileSetup -= HandleProjectileSetup;
 
-            _projectileModel.OnGotFromPool -= _getFromPool;
+            _projectileModel.OnTakenFromPool -= _takeFromPool;
             _projectileModel.OnReturnedToPool -= _returnToPool;
         }
 
@@ -39,9 +39,10 @@ namespace Player
             _projectileModel.ReturnToPool();
         }
 
-        private void HandleTargetSet(Vector3 targetPosition)
+        private void HandleProjectileSetup()
         {
-            _projectileView.LookAt(targetPosition);
+            _projectileView.SetPosition(_projectileModel.ShootPosition);
+            _projectileView.LookAt(_projectileModel.TargetPosition);
             _projectileView.SetSpeed(_projectileModel.Speed);
         }
     }

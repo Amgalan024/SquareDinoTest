@@ -7,23 +7,28 @@ namespace Player
 {
     public class ProjectileModel : MonoBehaviour
     {
-        public event Action<Vector3> OnTargetSet;
+        public event Action OnProjectileSetup;
         public event Action OnReturnedToPool;
-        public event Action OnGotFromPool;
+        public event Action OnTakenFromPool;
 
         [SerializeField] private float _speed;
         [SerializeField] private int _damage;
+
+        public bool IsAvailable { get; private set; }
+        public Vector3 ShootPosition { get; private set; }
+        public Vector3 TargetPosition { get; private set; }
 
         public float Speed => _speed;
         public int Damage => _damage;
 
         private readonly List<EnemyModel> _affectedEnemies = new List<EnemyModel>();
 
-        public bool IsAvailable { get; private set; }
-
-        public void SetTarget(Vector3 targetPosition)
+        public void SetupProjectile(Vector3 shootPosition, Vector3 targetPosition)
         {
-            OnTargetSet?.Invoke(targetPosition);
+            ShootPosition = shootPosition;
+            TargetPosition = targetPosition;
+
+            OnProjectileSetup?.Invoke();
         }
 
         public void ReturnToPool()
@@ -33,13 +38,13 @@ namespace Player
             OnReturnedToPool?.Invoke();
         }
 
-        public void GetFromPool()
+        public void TakeFromPool()
         {
             _affectedEnemies.Clear();
 
             IsAvailable = false;
 
-            OnGotFromPool?.Invoke();
+            OnTakenFromPool?.Invoke();
         }
 
         public void AddAffectedEnemy(EnemyModel enemyModel)
