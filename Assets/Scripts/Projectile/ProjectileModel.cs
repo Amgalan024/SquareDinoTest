@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
 
-namespace Player
+namespace Projectile
 {
     public class ProjectileModel : MonoBehaviour
     {

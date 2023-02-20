@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Projectile;
+using UnityEngine;
 
 namespace Player
 {

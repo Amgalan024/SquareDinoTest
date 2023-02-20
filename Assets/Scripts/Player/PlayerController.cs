@@ -13,7 +13,7 @@ namespace Player
 
         private Camera _camera;
 
-        private List<WayPointGoalModel> _subscriptions = new List<WayPointGoalModel>();
+        private readonly List<WayPointGoalModel> _subscriptions = new List<WayPointGoalModel>();
 
         private void Awake()
         {

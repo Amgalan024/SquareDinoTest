@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Player;
 using UnityEngine;
 
-namespace Player
+namespace Projectile
 {
     public class ProjectilePool : MonoBehaviour
     {

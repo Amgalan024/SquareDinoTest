@@ -1,4 +1,4 @@
-﻿using Player;
+﻿using Projectile;
 using UnityEngine;
 using WayPoint;
 
