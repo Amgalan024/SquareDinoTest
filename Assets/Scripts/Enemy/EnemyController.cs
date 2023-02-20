@@ -35,11 +35,13 @@ namespace Enemy
 
         private void HandleEnemyHit(EnemyView enemyView, Collision collision)
         {
-            if (collision.gameObject.TryGetComponent(out ProjectileModel projectileModel) &&
-                !projectileModel.ContainsAffectedEnemy(_enemyModel))
+            if (collision.gameObject.TryGetComponent(out ProjectileModel projectileModel))
             {
-                projectileModel.AddAffectedEnemy(_enemyModel);
-                _enemyModel.TakeDamage(projectileModel.Damage);
+                if (!projectileModel.ContainsAffectedEnemy(_enemyModel))
+                {
+                    projectileModel.AddAffectedEnemy(_enemyModel);
+                    _enemyModel.TakeDamage(projectileModel.Damage);
+                }
             }
         }
 
@@ -51,7 +53,9 @@ namespace Enemy
         private void HandleEnemyDeath()
         {
             _enemyView.PlayDeathAnimation();
+
             _wayPointGoalModel.InvokeGoalAchievement();
+
             Dispose();
         }
     }

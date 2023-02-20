@@ -5,13 +5,13 @@ namespace Player
 {
     public class ProjectileView : MonoBehaviour
     {
-        public event Action<ProjectileView, Collision> OnHit;
+        public event Action<Collision> OnHit;
 
         [SerializeField] private Rigidbody _rigidbody;
 
         private void OnCollisionEnter(Collision collision)
         {
-            OnHit?.Invoke(this, collision);
+            OnHit?.Invoke(collision);
         }
 
         public void SetActive(bool value)
