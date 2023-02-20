@@ -1,4 +1,6 @@
-﻿using UnityEngine.SceneManagement;
+﻿using System;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace Gameplay.GameplayStates
 {
@@ -6,6 +8,13 @@ namespace Gameplay.GameplayStates
     {
         public override void Enter()
         {
+            RestartAsync();
+        }
+
+        private async void RestartAsync()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
             var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
             SceneManager.LoadScene(currentSceneIndex);

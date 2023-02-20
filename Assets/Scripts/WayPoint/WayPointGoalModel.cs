@@ -7,8 +7,11 @@ namespace WayPoint
     {
         public event Action OnGoalAchieved;
 
+        public bool IsAchieved { get; private set; }
+
         public void InvokeGoalAchievement()
         {
+            IsAchieved = true;
             OnGoalAchieved?.Invoke();
         }
     }

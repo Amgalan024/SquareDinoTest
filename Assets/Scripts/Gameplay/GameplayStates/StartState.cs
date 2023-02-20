@@ -61,6 +61,8 @@ namespace Gameplay.GameplayStates
             }
             else
             {
+                _playerModel.SetCurrentWayPointGoals(_wayPointModels[_currentGameProgress].WayPointGoals);
+
                 _playerModel.SetDestination(_wayPointModels[_currentGameProgress].PlayerDestination.position);
             }
         }
