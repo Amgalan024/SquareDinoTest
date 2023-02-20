@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f91e738ba149cabacbaf0683674e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotationSpeed: 2
 --- !u!114 &3621979464636851171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +110,6 @@ MonoBehaviour:
   _playerModel: {fileID: 159304689352977150}
   _playerView: {fileID: 3621979464636851171}
   _cameraAnchor: {fileID: 2982939708914174809}
-  _cameraOffset: {x: 0, y: 0, z: 0}
 --- !u!195 &3621979464636851169
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3621979464983360903}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.621, z: 0.382}
+  m_LocalPosition: {x: -0.13, y: 1.621, z: 0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3621979465749240404}
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePool: {fileID: 3621979465551861633}
   _shootPoint: {fileID: 3621979464983360902}
+  _distanceMultiplierOnMiss: 25
 --- !u!1 &3621979465887755265
 GameObject:
   m_ObjectHideFlags: 0
