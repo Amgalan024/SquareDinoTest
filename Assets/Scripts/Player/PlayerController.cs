@@ -34,7 +34,7 @@ namespace Player
 
             foreach (var subscription in _subscriptions)
             {
-                subscription.OnGoalAchieved -= _playerModel.SetNewTarget;
+                subscription.OnGoalAchieved -= _playerModel.SetClosestTarget;
             }
         }
 
@@ -48,16 +48,16 @@ namespace Player
         {
             foreach (var subscription in _subscriptions)
             {
-                subscription.OnGoalAchieved -= _playerModel.SetNewTarget;
+                subscription.OnGoalAchieved -= _playerModel.SetClosestTarget;
             }
 
             _subscriptions.Clear();
 
-            _playerModel.SetNewTarget();
+            _playerModel.SetClosestTarget();
 
             foreach (var wayPointGoal in _playerModel.CurrentWayPointGoals)
             {
-                wayPointGoal.OnGoalAchieved += _playerModel.SetNewTarget;
+                wayPointGoal.OnGoalAchieved += _playerModel.SetClosestTarget;
             }
 
             _subscriptions.AddRange(_playerModel.CurrentWayPointGoals);

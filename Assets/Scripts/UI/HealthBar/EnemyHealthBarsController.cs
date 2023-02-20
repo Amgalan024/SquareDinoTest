@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Enemy;
+using Level;
 using UnityEngine;
 
 namespace UI
@@ -9,21 +10,25 @@ namespace UI
     {
         [SerializeField] private Canvas _parentCanvas;
 
-        [SerializeField] private EnemyModel[] _enemyModels;
+        [SerializeField] private LevelModel _levelModel;
 
         private Camera _camera;
 
-        private Dictionary<EnemyModel, HealthBar> _enemyHealthBars;
-        private Dictionary<EnemyModel, Action<int>> _onHealthChangedSubscriptions;
-        private Dictionary<EnemyModel, Action> _onEnemyDiedSubscriptions;
+        private readonly List<EnemyModel> _enemyModels = new List<EnemyModel>();
+
+        private readonly Dictionary<EnemyModel, HealthBar> _enemyHealthBars = new Dictionary<EnemyModel, HealthBar>();
+
+        private readonly Dictionary<EnemyModel, Action<int>> _onHealthChangedSubscriptions =
+            new Dictionary<EnemyModel, Action<int>>();
+
+        private readonly Dictionary<EnemyModel, Action>
+            _onEnemyDiedSubscriptions = new Dictionary<EnemyModel, Action>();
 
         private void Awake()
         {
             _camera = Camera.main;
 
-            _enemyHealthBars = new Dictionary<EnemyModel, HealthBar>(_enemyModels.Length);
-            _onHealthChangedSubscriptions = new Dictionary<EnemyModel, Action<int>>(_enemyModels.Length);
-            _onEnemyDiedSubscriptions = new Dictionary<EnemyModel, Action>(_enemyModels.Length);
+            ExtractEnemyModels();
 
             foreach (var enemyModel in _enemyModels)
             {
@@ -65,6 +70,20 @@ namespace UI
                 var worldSpaceAnchor = enemyModel.HealthBarAnchor;
 
                 SetHealthBarPosition(healthBar, worldSpaceAnchor);
+            }
+        }
+
+        private void ExtractEnemyModels()
+        {
+            foreach (var wayPointModel in _levelModel.WayPointModels)
+            {
+                foreach (var wayPointGoal in wayPointModel.WayPointGoals)
+                {
+                    if (wayPointGoal.TryGetComponent(out EnemyModel enemyModel))
+                    {
+                        _enemyModels.Add(enemyModel);
+                    }
+                }
             }
         }
 

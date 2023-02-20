@@ -6,6 +6,7 @@ namespace Player
 {
     public class ProjectilePool : MonoBehaviour
     {
+        [SerializeField] private PlayerModel _playerModel;
         [SerializeField] private ProjectileModel _projectilePrefab;
         [SerializeField] private int _initialCount;
 
@@ -17,7 +18,7 @@ namespace Player
 
             for (int i = 0; i < _initialCount; i++)
             {
-                var projectile = Instantiate(_projectilePrefab, transform);
+                var projectile = Instantiate(_projectilePrefab, _playerModel.ProjectilesRoot);
 
                 projectile.ReturnToPool();
 
@@ -31,7 +32,7 @@ namespace Player
 
             if (pooledProjectile == null)
             {
-                pooledProjectile = Instantiate(_projectilePrefab, transform);
+                pooledProjectile = Instantiate(_projectilePrefab, _playerModel.ProjectilesRoot);
 
                 _availableProjectiles.Add(pooledProjectile);
             }

@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 6134283704514840462}
   - component: {fileID: 8992716917156946882}
   - component: {fileID: 2028014501910938372}
+  - component: {fileID: 8210333080380548805}
   m_Layer: 5
   m_Name: PlayerInputZone
   m_TagString: Untagged
@@ -133,3 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36132310dc74b6caa2fd9bbd217d057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8210333080380548805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465736657452850546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc5756d47224fc19fc4cd383fd4c34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelModel: {fileID: 0}
+  _playerInputZone: {fileID: 2028014501910938372}

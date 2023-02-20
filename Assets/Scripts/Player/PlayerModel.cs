@@ -16,6 +16,7 @@ namespace Player
         [SerializeField] private float _rotationSpeed;
         public float RotationSpeed => _rotationSpeed;
 
+        public Transform ProjectilesRoot { get; set; }
         public Transform CurrentTarget { get; private set; }
         public WayPointGoalModel[] CurrentWayPointGoals { get; private set; }
 
@@ -42,7 +43,7 @@ namespace Player
             OnGoalsRefreshed?.Invoke();
         }
 
-        public void SetNewTarget()
+        public void SetClosestTarget()
         {
             var nextTarget = CurrentWayPointGoals.FirstOrDefault(g => !g.IsAchieved);
 
