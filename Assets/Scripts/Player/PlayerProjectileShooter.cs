@@ -21,12 +21,12 @@ namespace Player
 
             projectile.transform.position = _shootPoint.position;
 
-            var target = GetTarget(touchPosition);
+            var targetPosition = GetTargetPosition(touchPosition);
 
-            projectile.SetTarget(target);
+            projectile.SetTarget(targetPosition);
         }
 
-        private Vector3 GetTarget(Vector3 touchPosition)
+        private Vector3 GetTargetPosition(Vector3 touchPosition)
         {
             var nearPos = new Vector3(touchPosition.x, touchPosition.y, _camera.nearClipPlane);
             var farPos = new Vector3(touchPosition.x, touchPosition.y, _camera.farClipPlane);

@@ -23,6 +23,8 @@ namespace Gameplay.GameplayStates
 
             _startWayPoint = _wayPointModels[0];
             _totalGameProgress = _wayPointModels.Length;
+
+            _playerModel.SetStartPosition(_startWayPoint.PlayerDestination.position);
         }
 
         public override void Exit()
@@ -45,8 +47,6 @@ namespace Gameplay.GameplayStates
             _startScreen.SetActive(false);
 
             _playerModel.IsInputEnabled = true;
-
-            _playerModel.SetStartPosition(_startWayPoint.PlayerDestination.position);
 
             _startWayPoint.AddProgress();
         }

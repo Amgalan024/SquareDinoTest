@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067ee0d3b2d4419c918ba3af7ba210d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 7274495279143266705, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+  _projectilePrefab: {fileID: 1345220207638921322, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
   _initialCount: 5
 --- !u!1 &3621979465749240402
 GameObject:

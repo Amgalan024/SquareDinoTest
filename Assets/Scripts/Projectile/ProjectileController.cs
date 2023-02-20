@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Player
 {
@@ -7,21 +8,35 @@ namespace Player
         [SerializeField] private ProjectileModel _projectileModel;
         [SerializeField] private ProjectileView _projectileView;
 
-        private void Start()
-        {
-            _projectileView.SetSpeed(_projectileModel.Speed);
+        private Action _returnToPool;
+        private Action _getFromPool;
 
-            _projectileView.OnHit += HandleProjectileHit;
+        private void Awake()
+        {
+            _projectileView.OnHit += (view, collision) =>
+            {
+                _projectileModel.ReturnToPool();
+            };
+            
+            _projectileModel.OnTargetSet += vector3 =>
+            {
+                _projectileView.LookAt(vector3);
+                _projectileView.SetSpeed(_projectileModel.Speed);
+            };
+
+            _getFromPool = () => _projectileView.SetActive(true);
+            _projectileModel.OnGotFromPool += _getFromPool;
+
+            _returnToPool = () => _projectileView.SetActive(false);
+            _projectileModel.OnReturnedToPool += _returnToPool;
         }
 
         private void OnDestroy()
         {
-            _projectileView.OnHit -= HandleProjectileHit;
-        }
+            _projectileModel.OnTargetSet -= _projectileView.LookAt;
 
-        private void HandleProjectileHit(ProjectileView projectileView, Collision collision)
-        {
-            projectileView.ReturnToPool();
+            _projectileModel.OnGotFromPool -= _getFromPool;
+            _projectileModel.OnReturnedToPool -= _returnToPool;
         }
     }
 }

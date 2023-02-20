@@ -9,18 +9,25 @@ namespace Enemy
 
         [SerializeField] private Animator _animator;
 
+        private RagDollPartView[] _ragDollParts;
         private Rigidbody[] _ragDollRigidbodies;
 
         public void Start()
         {
+            _ragDollParts = GetComponentsInChildren<RagDollPartView>();
             _ragDollRigidbodies = GetComponentsInChildren<Rigidbody>();
+
+            foreach (var bodyPart in _ragDollParts)
+            {
+                bodyPart.OnHit += OnBodyPartHit;
+            }
 
             _animator.enabled = true;
 
             SetRagDollRigidBodiesKinematic(true);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnBodyPartHit(Collision collision)
         {
             OnHit?.Invoke(this, collision);
         }

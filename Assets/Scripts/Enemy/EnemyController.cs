@@ -35,8 +35,10 @@ namespace Enemy
 
         private void HandleEnemyHit(EnemyView enemyView, Collision collision)
         {
-            if (collision.gameObject.TryGetComponent(out ProjectileModel projectileModel))
+            if (collision.gameObject.TryGetComponent(out ProjectileModel projectileModel) &&
+                !projectileModel.ContainsAffectedEnemy(_enemyModel))
             {
+                projectileModel.AddAffectedEnemy(_enemyModel);
                 _enemyModel.TakeDamage(projectileModel.Damage);
             }
         }

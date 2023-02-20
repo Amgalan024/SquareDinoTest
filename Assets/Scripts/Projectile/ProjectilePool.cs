@@ -6,14 +6,14 @@ namespace Player
 {
     public class ProjectilePool : MonoBehaviour
     {
-        [SerializeField] private ProjectileView _projectilePrefab;
+        [SerializeField] private ProjectileModel _projectilePrefab;
         [SerializeField] private int _initialCount;
 
-        private List<ProjectileView> _availableProjectiles;
+        private List<ProjectileModel> _availableProjectiles;
 
         private void Start()
         {
-            _availableProjectiles = new List<ProjectileView>(_initialCount);
+            _availableProjectiles = new List<ProjectileModel>(_initialCount);
 
             for (int i = 0; i < _initialCount; i++)
             {
@@ -25,9 +25,9 @@ namespace Player
             }
         }
 
-        public ProjectileView GetProjectile()
+        public ProjectileModel GetProjectile()
         {
-            var pooledProjectile = _availableProjectiles.FirstOrDefault(p => p.gameObject.activeInHierarchy);
+            var pooledProjectile = _availableProjectiles.FirstOrDefault(p => p.IsAvailable);
 
             if (pooledProjectile == null)
             {
@@ -36,7 +36,7 @@ namespace Player
                 _availableProjectiles.Add(pooledProjectile);
             }
 
-            pooledProjectile.Initialize();
+            pooledProjectile.GetFromPool();
 
             return pooledProjectile;
         }

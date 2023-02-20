@@ -14,19 +14,14 @@ namespace Player
             OnHit?.Invoke(this, collision);
         }
 
-        public void Initialize()
+        public void SetActive(bool value)
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(value);
         }
 
-        public void ReturnToPool()
+        public void LookAt(Vector3 position)
         {
-            gameObject.SetActive(false);
-        }
-
-        public void SetTarget(Vector3 direction)
-        {
-            transform.LookAt(direction);
+            transform.LookAt(position);
         }
 
         public void SetSpeed(float speed)
