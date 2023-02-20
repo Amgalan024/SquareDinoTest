@@ -1,5 +1,4 @@
 ﻿using Player;
-using UI;
 using UnityEngine;
 using WayPoint;
 
@@ -9,15 +8,11 @@ namespace Enemy
     {
         [SerializeField] private EnemyView _enemyView;
         [SerializeField] private EnemyModel _enemyModel;
-        [SerializeField] private HealthBar _healthBar;
         [SerializeField] private WayPointGoalModel _wayPointGoalModel;
 
         private void Start()
         {
-            _healthBar.Initialize(_enemyModel.HealthPoints);
-
             _enemyView.OnHit += HandleEnemyHit;
-            _enemyModel.OnHealthChanged += HandleEnemyHealthChange;
             _enemyModel.OnEnemyDied += HandleEnemyDeath;
         }
 
@@ -29,7 +24,6 @@ namespace Enemy
         private void Dispose()
         {
             _enemyView.OnHit -= HandleEnemyHit;
-            _enemyModel.OnHealthChanged -= HandleEnemyHealthChange;
             _enemyModel.OnEnemyDied -= HandleEnemyDeath;
         }
 
@@ -43,11 +37,6 @@ namespace Enemy
                     _enemyModel.TakeDamage(projectileModel.Damage);
                 }
             }
-        }
-
-        private void HandleEnemyHealthChange(int currentHealth)
-        {
-            _healthBar.SetValue(currentHealth);
         }
 
         private void HandleEnemyDeath()

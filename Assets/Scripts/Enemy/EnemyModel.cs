@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 
 namespace Enemy
@@ -9,8 +10,12 @@ namespace Enemy
         public event Action OnEnemyDied;
 
         [SerializeField] private int _healthPoints;
+        [SerializeField] private HealthBar _healthBarPrefab;
+        [SerializeField] private Transform _healthBarAnchor;
 
         public int HealthPoints => _healthPoints;
+        public HealthBar HealthBarPrefab => _healthBarPrefab;
+        public Transform HealthBarAnchor => _healthBarAnchor;
 
         private int _currentHealthPoints;
 
