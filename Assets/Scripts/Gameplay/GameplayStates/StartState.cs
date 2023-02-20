@@ -8,6 +8,7 @@ namespace Gameplay.GameplayStates
     public class StartState : BaseGameplayState
     {
         [SerializeField] private StartScreen _startScreen;
+        [SerializeField] private PlayerInputZone _playerInputZone;
         [SerializeField] private PlayerModel _playerPrefab;
         [SerializeField] private WayPointModel[] _wayPointModels;
 
@@ -19,20 +20,23 @@ namespace Gameplay.GameplayStates
         public override void Enter()
         {
             _startScreen.SetActive(true);
+            _playerInputZone.SetActive(false);
 
             _startScreen.OnClick += StartGame;
+            _playerInputZone.OnTouch += HandleTouchDown;
 
             _startWayPoint = _wayPointModels[0];
             _totalGameProgress = _wayPointModels.Length;
-            
+
             _playerModel = Instantiate(_playerPrefab);
-            
+
             _playerModel.SetStartPosition(_startWayPoint.PlayerDestination.position);
         }
 
         public override void Exit()
         {
             _startScreen.OnClick -= StartGame;
+            _playerInputZone.OnTouch -= HandleTouchDown;
 
             foreach (var wayPointController in _wayPointModels)
             {
@@ -48,10 +52,14 @@ namespace Gameplay.GameplayStates
             }
 
             _startScreen.SetActive(false);
-
-            _playerModel.IsInputEnabled = true;
+            _playerInputZone.SetActive(true);
 
             _startWayPoint.AddProgress();
+        }
+
+        private void HandleTouchDown(Vector3 touchPosition)
+        {
+            _playerModel.ShootProjectile(touchPosition);
         }
 
         private void AddProgress()

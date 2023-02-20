@@ -20,6 +20,7 @@ namespace Player
             _playerModel.OnGoalsRefreshed += OnGoalsRefreshed;
             _playerModel.OnStartPositionSet += _playerView.SetPosition;
             _playerModel.OnDestinationSet += _playerView.MoveTo;
+            _playerModel.OnShootCommand += _playerProjectileShooter.ShootProjectile;
 
             _camera = Camera.main;
         }
@@ -29,6 +30,7 @@ namespace Player
             _playerModel.OnGoalsRefreshed -= OnGoalsRefreshed;
             _playerModel.OnStartPositionSet -= _playerView.SetPosition;
             _playerModel.OnDestinationSet -= _playerView.MoveTo;
+            _playerModel.OnShootCommand -= _playerProjectileShooter.ShootProjectile;
 
             foreach (var subscription in _subscriptions)
             {
@@ -38,9 +40,8 @@ namespace Player
 
         private void Update()
         {
-            HandlePlayerAim();
-            HandleCameraPosition();
-            HandleTouchInput();
+            RotateTowardsTarget();
+            SetCameraPosition();
         }
 
         private void OnGoalsRefreshed()
@@ -62,7 +63,7 @@ namespace Player
             _subscriptions.AddRange(_playerModel.CurrentWayPointGoals);
         }
 
-        private void HandlePlayerAim()
+        private void RotateTowardsTarget()
         {
             if (_playerModel.CurrentTarget == null)
             {
@@ -83,7 +84,7 @@ namespace Player
                 Time.deltaTime * _playerModel.RotationSpeed);
         }
 
-        private void HandleCameraPosition()
+        private void SetCameraPosition()
         {
             _camera.transform.position = _cameraAnchor.position;
 
@@ -93,24 +94,6 @@ namespace Player
                 new Vector3(cameraEulerAngles.x, transform.rotation.eulerAngles.y, cameraEulerAngles.z);
 
             _camera.transform.rotation = Quaternion.Euler(newCameraAngle);
-        }
-
-        private void HandleTouchInput()
-        {
-            if (!_playerModel.IsInputEnabled)
-            {
-                return;
-            }
-
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    _playerProjectileShooter.ShootProjectile(touch.position);
-                }
-            }
         }
     }
 }

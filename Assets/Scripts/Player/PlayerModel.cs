@@ -9,12 +9,13 @@ namespace Player
     {
         public event Action<Vector3> OnDestinationSet;
         public event Action<Vector3> OnStartPositionSet;
+        public event Action<Vector3> OnShootCommand;
+
         public event Action OnGoalsRefreshed;
 
         [SerializeField] private float _rotationSpeed;
         public float RotationSpeed => _rotationSpeed;
 
-        public bool IsInputEnabled { get; set; }
         public Transform CurrentTarget { get; private set; }
         public WayPointGoalModel[] CurrentWayPointGoals { get; private set; }
 
@@ -26,6 +27,11 @@ namespace Player
         public void SetStartPosition(Vector3 startPosition)
         {
             OnStartPositionSet?.Invoke(startPosition);
+        }
+
+        public void ShootProjectile(Vector3 touchPosition)
+        {
+            OnShootCommand?.Invoke(touchPosition);
         }
 
         public void SetCurrentWayPointGoals(WayPointGoalModel[] wayPointGoalModels)
