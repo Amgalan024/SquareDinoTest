@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPoints: 30
-  _healthBarPrefab: {fileID: 3137225356965780553, guid: 0ca2452461815e94f91a1e712b37aa83, type: 3}
+  _healthBarPrefab: {fileID: 4656466670690383196, guid: b7c6ce6efe250244a839671aa695b2cf, type: 3}
   _healthBarAnchor: {fileID: 6481892923214807981}
 --- !u!114 &8055474958125846857
 MonoBehaviour:
@@ -79,7 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyView: {fileID: 8055474958125846857}
   _enemyModel: {fileID: 1572739355924778921}
-  _healthBar: {fileID: 2601217937485121573}
   _wayPointGoalModel: {fileID: 5526408473962873084}
 --- !u!114 &5526408473962873084
 MonoBehaviour:

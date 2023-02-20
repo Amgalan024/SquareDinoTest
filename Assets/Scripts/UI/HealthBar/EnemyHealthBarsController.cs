@@ -52,17 +52,17 @@ namespace UI
             foreach (var enemyModel in _enemyModels)
             {
                 var healthBar = _enemyHealthBars[enemyModel];
-                var anchor = enemyModel.HealthBarAnchor;
+                var worldSpaceAnchor = enemyModel.HealthBarAnchor;
 
-                SetHealthBarPosition(healthBar, anchor);
+                SetHealthBarPosition(healthBar, worldSpaceAnchor);
             }
         }
 
-        private void SetHealthBarPosition(HealthBar healthBar, Transform anchor)
+        private void SetHealthBarPosition(HealthBar healthBar, Transform worldSpaceAnchor)
         {
-            var enemyScreenPosition = _camera.WorldToScreenPoint(anchor.position);
+            healthBar.transform.position = worldSpaceAnchor.position;
 
-            healthBar.transform.position = enemyScreenPosition;
+            healthBar.transform.LookAt(healthBar.transform.position + _camera.transform.forward);
         }
 
         private void HandleEnemyHealthChange(HealthBar healthBar, int currentHealth)
