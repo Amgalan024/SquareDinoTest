@@ -51,6 +51,10 @@ namespace Player
             {
                 CurrentTarget = nextTarget.transform;
             }
+            else
+            {
+                CurrentTarget = null;
+            }
         }
     }
 }
