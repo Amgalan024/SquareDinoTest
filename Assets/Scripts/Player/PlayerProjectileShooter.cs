@@ -33,19 +33,22 @@ namespace Player
             var nearPosConverted = _camera.ScreenToWorldPoint(nearPos);
             var farPosConverted = _camera.ScreenToWorldPoint(farPos);
 
-            Vector3 direction;
+            var missedDirection = nearPosConverted + farPosConverted * _distanceMultiplierOnMiss;
 
             if (Physics.Raycast(nearPosConverted, farPosConverted - nearPosConverted, out RaycastHit hit,
                     Mathf.Infinity))
             {
-                direction = hit.point;
+                if (hit.collider.GetComponent<PlayerModel>())
+                {
+                    return missedDirection;
+                }
+
+                return hit.point;
             }
             else
             {
-                direction = nearPosConverted + farPosConverted * _distanceMultiplierOnMiss;
+                return missedDirection;
             }
-
-            return direction;
         }
     }
 }
