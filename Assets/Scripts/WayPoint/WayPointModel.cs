@@ -6,6 +6,7 @@ namespace WayPoint
     public class WayPointModel : MonoBehaviour
     {
         public event Action OnWayPointPassed;
+        public event Action OnPlayerArrived;
 
         [SerializeField] private WayPointGoalModel[] _wayPointGoals;
         [SerializeField] private Transform _playerDestination;
@@ -29,6 +30,11 @@ namespace WayPoint
             {
                 OnWayPointPassed?.Invoke();
             }
+        }
+
+        public void InvokePlayerArriving()
+        {
+            OnPlayerArrived?.Invoke();
         }
     }
 }

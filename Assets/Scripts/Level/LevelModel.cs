@@ -13,13 +13,16 @@ namespace Level
 
         public event Action OnPlayerCreated;
 
+        [SerializeField] private WayPointModel _startWayPoint;
         [SerializeField] private WayPointModel[] _wayPointModels;
+        [SerializeField] private WayPointModel _finishWayPoint;
         [SerializeField] private Transform _projectilesRoot;
 
+        public WayPointModel StartWayPoint => _startWayPoint;
         public WayPointModel[] WayPointModels => _wayPointModels;
+        public WayPointModel FinishWayPoint => _finishWayPoint;
         public Transform ProjectilesRoot => _projectilesRoot;
         public PlayerModel PlayerModel { get; private set; }
-        public WayPointModel StartWayPoint { get; private set; }
 
         private int _currentGameProgress;
         private int _totalGameProgress;
@@ -27,7 +30,6 @@ namespace Level
         private void Awake()
         {
             _totalGameProgress = _wayPointModels.Length;
-            StartWayPoint = _wayPointModels[0];
         }
 
         public void SetPlayerModel(PlayerModel playerModel)

@@ -14,16 +14,20 @@ namespace Level
         {
             _levelModel.OnLevelStarted += HandleLevelStart;
             _levelModel.OnLevelProgressed += HandleLevelProgress;
-            _levelModel.OnLevelCompleted += _gameplayStateMachine.ChangeState<FinishState>;
+            _levelModel.OnLevelCompleted += HandleLevelCompletion;
             _levelModel.OnPlayerCreated += SetupPlayer;
+
+            _levelModel.FinishWayPoint.OnPlayerArrived += HandlePlayerArrivalAtFinish;
         }
 
         private void OnDestroy()
         {
             _levelModel.OnLevelStarted -= HandleLevelStart;
             _levelModel.OnLevelProgressed -= HandleLevelProgress;
-            _levelModel.OnLevelCompleted -= _gameplayStateMachine.ChangeState<FinishState>;
+            _levelModel.OnLevelCompleted -= HandleLevelCompletion;
             _levelModel.OnPlayerCreated -= SetupPlayer;
+
+            _levelModel.FinishWayPoint.OnPlayerArrived -= HandlePlayerArrivalAtFinish;
 
             foreach (var wayPointModel in _levelModel.WayPointModels)
             {
@@ -38,6 +42,18 @@ namespace Level
             _levelModel.PlayerModel.SetStartPosition(_levelModel.StartWayPoint.PlayerDestination.position);
         }
 
+        private void HandleLevelStart()
+        {
+            foreach (var wayPointModel in _levelModel.WayPointModels)
+            {
+                wayPointModel.OnWayPointPassed += _levelModel.AddProgress;
+            }
+
+            HandleLevelProgress(0);
+
+            _levelModel.PlayerModel.SetStartPosition(_levelModel.StartWayPoint.PlayerDestination.position);
+        }
+
         private void HandleLevelProgress(int currentProgress)
         {
             _levelModel.PlayerModel.SetCurrentWayPointGoals(_levelModel.WayPointModels[currentProgress]
@@ -47,16 +63,14 @@ namespace Level
                 .position);
         }
 
-        private void HandleLevelStart()
+        private void HandleLevelCompletion()
         {
-            foreach (var wayPointModel in _levelModel.WayPointModels)
-            {
-                wayPointModel.OnWayPointPassed += _levelModel.AddProgress;
-            }
+            _levelModel.PlayerModel.SetDestination(_levelModel.FinishWayPoint.PlayerDestination.transform.position);
+        }
 
-            _levelModel.StartWayPoint.AddProgress();
-
-            _levelModel.PlayerModel.SetStartPosition(_levelModel.StartWayPoint.PlayerDestination.position);
+        private void HandlePlayerArrivalAtFinish()
+        {
+            _gameplayStateMachine.ChangeState<FinishState>();
         }
     }
 }
