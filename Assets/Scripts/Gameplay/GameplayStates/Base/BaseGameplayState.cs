@@ -4,7 +4,12 @@ namespace Gameplay.GameplayStates
 {
     public abstract class BaseGameplayState : MonoBehaviour
     {
-        public GameplayStateMachine StateMachine { get; set; }
+        protected GameplayStateMachine StateMachine;
+
+        public void SetStateMachine(GameplayStateMachine stateMachine)
+        {
+            StateMachine = stateMachine;
+        }
 
         public virtual void Enter()
         {

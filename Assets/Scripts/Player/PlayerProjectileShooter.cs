@@ -8,12 +8,14 @@ namespace Player
         [SerializeField] private ProjectilePool _projectilePool;
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private float _distanceMultiplierOnMiss = 25f;
-
+        [SerializeField] private PlayerModel _playerModel;
+        [SerializeField] private string _layerName;
         private Camera _camera;
 
-        private void Start()
+        private void Awake()
         {
             _camera = Camera.main;
+            _projectilePool.Initialize(_playerModel.ProjectilesRoot);
         }
 
         public void ShootProjectile(Vector3 touchPosition)
@@ -36,13 +38,8 @@ namespace Player
             var missedDirection = nearPosConverted + farPosConverted * _distanceMultiplierOnMiss;
 
             if (Physics.Raycast(nearPosConverted, farPosConverted - nearPosConverted, out RaycastHit hit,
-                    Mathf.Infinity))
+                    Mathf.Infinity, ~(LayerMask.GetMask(_layerName))))
             {
-                if (hit.collider.GetComponent<PlayerModel>())
-                {
-                    return missedDirection;
-                }
-
                 return hit.point;
             }
             else

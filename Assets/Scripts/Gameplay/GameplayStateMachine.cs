@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Gameplay.GameplayStates;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace Gameplay
         {
             foreach (var gameplayState in _gameplayStates)
             {
-                gameplayState.StateMachine = this;
+                gameplayState.SetStateMachine(this);
             }
         }
 

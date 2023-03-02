@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 
 namespace Enemy
@@ -8,6 +9,9 @@ namespace Enemy
         public event Action<EnemyView, Collision> OnHit;
 
         [SerializeField] private Animator _animator;
+        [SerializeField] private HealthBar _healthBar;
+
+        public HealthBar HealthBar => _healthBar;
 
         private RagDollPartView[] _ragDollParts;
         private Rigidbody[] _ragDollRigidbodies;
@@ -40,6 +44,11 @@ namespace Enemy
             _animator.enabled = false;
 
             SetRagDollRigidBodiesKinematic(false);
+        }
+
+        public void SetHealthBarValue(int currentHealth)
+        {
+            _healthBar.SetValue(currentHealth);
         }
 
         private void OnBodyPartHit(Collision collision)

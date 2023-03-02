@@ -2,50 +2,35 @@
 using UnityEngine;
 using WayPoint;
 using System.Linq;
+using Level;
+using UI;
 
 namespace Player
 {
     public class PlayerModel : MonoBehaviour
     {
-        public event Action<Vector3> OnDestinationSet;
-        public event Action<Vector3> OnStartPositionSet;
-        public event Action<Vector3> OnShootCommand;
-
-        public event Action OnGoalsRefreshed;
-
+        [SerializeField] private Transform _cameraAnchor;
         [SerializeField] private float _rotationSpeed;
+
+        public Transform CameraAnchor => _cameraAnchor;
         public float RotationSpeed => _rotationSpeed;
 
-        public Transform ProjectilesRoot { get; set; }
+        public LevelModel LevelModel { get; private set; }
+        public PlayerInputZone PlayerInputZone { get; private set; }
+        public Transform ProjectilesRoot { get; private set; }
+
         public Transform CurrentTarget { get; private set; }
-        public WayPointGoalModel[] CurrentWayPointGoals { get; private set; }
 
-        public void SetDestination(Vector3 destination)
+        public void Initialize(LevelModel levelModel, PlayerInputZone playerInputZone, Transform projectilesRoot)
         {
-            OnDestinationSet?.Invoke(destination);
-        }
-
-        public void SetStartPosition(Vector3 startPosition)
-        {
-            OnStartPositionSet?.Invoke(startPosition);
-        }
-
-        public void ShootProjectile(Vector3 touchPosition)
-        {
-            OnShootCommand?.Invoke(touchPosition);
-        }
-
-        public void SetCurrentWayPointGoals(WayPointGoalModel[] wayPointGoalModels)
-        {
-            CurrentWayPointGoals = wayPointGoalModels
-                .OrderBy(w => (w.transform.position - transform.position).magnitude).ToArray();
-
-            OnGoalsRefreshed?.Invoke();
+            LevelModel = levelModel;
+            PlayerInputZone = playerInputZone;
+            ProjectilesRoot = projectilesRoot;
         }
 
         public void SetClosestTarget()
         {
-            var nextTarget = CurrentWayPointGoals.FirstOrDefault(g => !g.IsAchieved);
+            var nextTarget = LevelModel.CurrentWayPointGoals.FirstOrDefault(g => !g.IsAchieved);
 
             if (nextTarget != null)
             {

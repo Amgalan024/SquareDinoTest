@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Player;
 using UnityEngine;
 
 namespace Projectile
 {
     public class ProjectilePool : MonoBehaviour
     {
-        [SerializeField] private PlayerModel _playerModel;
         [SerializeField] private ProjectileModel _projectilePrefab;
         [SerializeField] private int _initialCount;
 
         private List<ProjectileModel> _availableProjectiles;
+        private Transform _root;
 
-        private void Start()
+        public void Initialize(Transform root)
         {
+            _root = root;
+            
             _availableProjectiles = new List<ProjectileModel>(_initialCount);
 
             for (int i = 0; i < _initialCount; i++)
             {
-                var projectile = Instantiate(_projectilePrefab, _playerModel.ProjectilesRoot);
+                var projectile = Instantiate(_projectilePrefab, _root);
 
                 projectile.ReturnToPool();
 
@@ -33,7 +34,7 @@ namespace Projectile
 
             if (pooledProjectile == null)
             {
-                pooledProjectile = Instantiate(_projectilePrefab, _playerModel.ProjectilesRoot);
+                pooledProjectile = Instantiate(_projectilePrefab, _root);
 
                 _availableProjectiles.Add(pooledProjectile);
             }
