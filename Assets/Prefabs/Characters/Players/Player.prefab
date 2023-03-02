@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 159304689352977150}
   - component: {fileID: 3621979464636851171}
   - component: {fileID: 3621979464636851168}
+  - component: {fileID: 7065039632896033021}
   - component: {fileID: 3621979464636851169}
   - component: {fileID: 8762348440026044542}
   - component: {fileID: 1269259548243276601}
@@ -81,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f91e738ba149cabacbaf0683674e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraAnchor: {fileID: 2982939708914174809}
   _rotationSpeed: 2
 --- !u!114 &3621979464636851171
 MonoBehaviour:
@@ -108,10 +110,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1331649db7a4192bae345fd992dc7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerProjectileShooter: {fileID: 3621979465749240405}
   _playerModel: {fileID: 159304689352977150}
   _playerView: {fileID: 3621979464636851171}
-  _cameraAnchor: {fileID: 2982939708914174809}
+--- !u!114 &7065039632896033021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621979464636851198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc5756d47224fc19fc4cd383fd4c34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerProjectileShooter: {fileID: 3621979465749240405}
+  _playerModel: {fileID: 159304689352977150}
 --- !u!195 &3621979464636851169
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -237,7 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067ee0d3b2d4419c918ba3af7ba210d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerModel: {fileID: 159304689352977150}
   _projectilePrefab: {fileID: 1345220207638921322, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
   _initialCount: 5
 --- !u!1 &3621979465749240402
@@ -288,6 +301,8 @@ MonoBehaviour:
   _projectilePool: {fileID: 3621979465551861633}
   _shootPoint: {fileID: 3621979464983360902}
   _distanceMultiplierOnMiss: 25
+  _playerModel: {fileID: 159304689352977150}
+  _layerName: Player
 --- !u!1 &3621979465887755265
 GameObject:
   m_ObjectHideFlags: 0

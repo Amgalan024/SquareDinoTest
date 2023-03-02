@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1523898018871560839, guid: 6e8348c1814b34040b26e5cf10bde745, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2419473416168803762, guid: 6e8348c1814b34040b26e5cf10bde745, type: 3}
       propertyPath: m_Name
       value: WayPoint 0 Variant
