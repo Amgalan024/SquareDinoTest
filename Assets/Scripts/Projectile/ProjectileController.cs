@@ -37,7 +37,7 @@ namespace Projectile
 
         private void HandleHit(Collision collision)
         {
-            _projectileModel.ReturnToPool();
+            //_projectileModel.ReturnToPool();
         }
 
         private void HandleProjectileSetup()
