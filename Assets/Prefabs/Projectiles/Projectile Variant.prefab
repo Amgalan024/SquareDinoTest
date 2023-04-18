@@ -128,10 +128,56 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6416783803028910452, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+      propertyPath: _projectileBehaviour
+      value: 
+      objectReference: {fileID: 2766204561906477379}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+--- !u!1 &8680333181071786641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5167667637967485308, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+  m_PrefabInstance: {fileID: 4594097543159708653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3272619365127273351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1345220207638921322, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+  m_PrefabInstance: {fileID: 4594097543159708653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8680333181071786641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1286ce61a0ce417bb22dde619e0fd365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6572354625957024380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7274495279143266705, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
+  m_PrefabInstance: {fileID: 4594097543159708653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8680333181071786641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab6251cf3b5405697e0e02d2df8d58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5354205192392734452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8470274873763663129, guid: b9335309316484a4dbfb70115bebaf55, type: 3}
   m_PrefabInstance: {fileID: 4594097543159708653}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2766204561906477379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8680333181071786641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641b7c7771664ea49ac8dc6ea4b3ba2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileModel: {fileID: 3272619365127273351}
+  _projectileView: {fileID: 6572354625957024380}
+  _movementSpeed: 3

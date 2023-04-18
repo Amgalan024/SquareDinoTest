@@ -5,20 +5,23 @@ namespace Projectile
 {
     public class ProjectileView : MonoBehaviour
     {
-        public event Action<Collision> OnHit;
+        public event Action<Collider> OnHit;
 
-        [SerializeField] private Rigidbody _rigidbody;
-
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider otherCollider)
         {
-            OnHit?.Invoke(collision);
+            OnHit?.Invoke(otherCollider);
         }
 
         public void SetPosition(Vector3 position)
         {
             transform.position = position;
         }
-        
+
+        public void SetParent(Transform parent)
+        {
+            transform.SetParent(parent);
+        }
+
         public void SetActive(bool value)
         {
             gameObject.SetActive(value);
@@ -27,11 +30,6 @@ namespace Projectile
         public void LookAt(Vector3 position)
         {
             transform.LookAt(position);
-        }
-
-        public void SetSpeed(float speed)
-        {
-            _rigidbody.velocity = transform.forward * speed;
         }
     }
 }

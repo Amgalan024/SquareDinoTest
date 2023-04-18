@@ -10,8 +10,13 @@ namespace Enemy
         public event Action OnEnemyDied;
 
         [SerializeField] private int _healthPoints;
+        [SerializeField] private float _deathDuration;
+        [SerializeField] private float _reviveDuration;
 
         public int HealthPoints => _healthPoints;
+        public float DeathDuration => _deathDuration;
+        public float ReviveDuration => _reviveDuration;
+
 
         private int _currentHealthPoints;
 

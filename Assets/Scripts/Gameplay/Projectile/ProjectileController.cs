@@ -1,5 +1,5 @@
 ﻿using System;
-using Player;
+using Projectile.Behaviours;
 using UnityEngine;
 
 namespace Projectile
@@ -8,6 +8,7 @@ namespace Projectile
     {
         [SerializeField] private ProjectileModel _projectileModel;
         [SerializeField] private ProjectileView _projectileView;
+        [SerializeField] private BaseProjectileBehaviour _projectileBehaviour;
 
         private Action _returnToPool;
         private Action _takeFromPool;
@@ -17,9 +18,8 @@ namespace Projectile
             _takeFromPool = () => _projectileView.SetActive(true);
             _returnToPool = () => _projectileView.SetActive(false);
 
-            _projectileView.OnHit += HandleHit;
-
-            _projectileModel.OnProjectileSetup += HandleProjectileSetup;
+            _projectileView.OnHit += _projectileBehaviour.HandleProjectileHit;
+            _projectileModel.OnProjectileSetup += _projectileBehaviour.HandleProjectileSetup;
 
             _projectileModel.OnTakenFromPool += _takeFromPool;
             _projectileModel.OnReturnedToPool += _returnToPool;
@@ -27,24 +27,11 @@ namespace Projectile
 
         private void OnDestroy()
         {
-            _projectileView.OnHit -= HandleHit;
-
-            _projectileModel.OnProjectileSetup -= HandleProjectileSetup;
+            _projectileView.OnHit -= _projectileBehaviour.HandleProjectileHit;
+            _projectileModel.OnProjectileSetup -= _projectileBehaviour.HandleProjectileSetup;
 
             _projectileModel.OnTakenFromPool -= _takeFromPool;
             _projectileModel.OnReturnedToPool -= _returnToPool;
-        }
-
-        private void HandleHit(Collision collision)
-        {
-            //_projectileModel.ReturnToPool();
-        }
-
-        private void HandleProjectileSetup()
-        {
-            _projectileView.SetPosition(_projectileModel.ShootPosition);
-            _projectileView.LookAt(_projectileModel.TargetPosition);
-            _projectileView.SetSpeed(_projectileModel.Speed);
         }
     }
 }
