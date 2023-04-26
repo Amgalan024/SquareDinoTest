@@ -17,7 +17,7 @@ namespace Projectile.Behaviours
             _projectileModel.ReturnToPool();
         }
 
-        public override void HandleProjectileSetup()
+        public override void SetupBehaviour()
         {
             _projectileView.SetPosition(_projectileModel.ShootPosition);
             _projectileView.LookAt(_projectileModel.TargetPosition);

@@ -7,7 +7,7 @@ namespace Projectile
 {
     public class ProjectileModel : MonoBehaviour
     {
-        public event Action OnProjectileSetup;
+        public event Action OnSetup;
         public event Action OnReturnedToPool;
         public event Action OnTakenFromPool;
 
@@ -23,12 +23,12 @@ namespace Projectile
 
         private readonly List<EnemyModel> _affectedEnemies = new List<EnemyModel>();
 
-        public void SetupProjectile(Vector3 shootPosition, Vector3 targetPosition)
+        public void Setup(Vector3 shootPosition, Vector3 targetPosition)
         {
             ShootPosition = shootPosition;
             TargetPosition = targetPosition;
 
-            OnProjectileSetup?.Invoke();
+            OnSetup?.Invoke();
         }
 
         public void ReturnToPool()

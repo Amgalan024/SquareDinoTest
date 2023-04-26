@@ -24,7 +24,7 @@ namespace Player
 
             var targetPosition = GetTargetPosition(touchPosition);
 
-            projectile.SetupProjectile(_shootPoint.position, targetPosition);
+            projectile.Setup(_shootPoint.position, targetPosition);
         }
 
         private Vector3 GetTargetPosition(Vector3 touchPosition)

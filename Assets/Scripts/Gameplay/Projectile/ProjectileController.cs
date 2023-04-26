@@ -19,7 +19,7 @@ namespace Projectile
             _returnToPool = () => _projectileView.SetActive(false);
 
             _projectileView.OnHit += _projectileBehaviour.HandleProjectileHit;
-            _projectileModel.OnProjectileSetup += _projectileBehaviour.HandleProjectileSetup;
+            _projectileModel.OnSetup += _projectileBehaviour.SetupBehaviour;
 
             _projectileModel.OnTakenFromPool += _takeFromPool;
             _projectileModel.OnReturnedToPool += _returnToPool;
@@ -28,7 +28,7 @@ namespace Projectile
         private void OnDestroy()
         {
             _projectileView.OnHit -= _projectileBehaviour.HandleProjectileHit;
-            _projectileModel.OnProjectileSetup -= _projectileBehaviour.HandleProjectileSetup;
+            _projectileModel.OnSetup -= _projectileBehaviour.SetupBehaviour;
 
             _projectileModel.OnTakenFromPool -= _takeFromPool;
             _projectileModel.OnReturnedToPool -= _returnToPool;
