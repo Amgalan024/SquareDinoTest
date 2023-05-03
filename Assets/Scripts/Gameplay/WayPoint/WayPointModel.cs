@@ -35,6 +35,11 @@ namespace WayPoint
         public void InvokePlayerArriving()
         {
             OnPlayerArrived?.Invoke();
+
+            foreach (var wayPointGoal in _wayPointGoals)
+            {
+                wayPointGoal.ActivateGoal();
+            }
         }
     }
 }

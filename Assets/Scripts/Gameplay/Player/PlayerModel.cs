@@ -9,6 +9,8 @@ namespace Player
 {
     public class PlayerModel : MonoBehaviour
     {
+        public event Action OnPlayerDied;
+
         [SerializeField] private Transform _cameraAnchor;
         [SerializeField] private float _rotationSpeed;
 
@@ -21,11 +23,14 @@ namespace Player
 
         public Transform CurrentTarget { get; private set; }
 
+        public bool IsAlive { get; private set; }
+
         public void Initialize(LevelModel levelModel, PlayerInputZone playerInputZone, Transform projectilesRoot)
         {
             LevelModel = levelModel;
             PlayerInputZone = playerInputZone;
             ProjectilesRoot = projectilesRoot;
+            IsAlive = true;
         }
 
         public void SetClosestTarget()
@@ -39,6 +44,15 @@ namespace Player
             else
             {
                 CurrentTarget = null;
+            }
+        }
+
+        public void KillPlayer()
+        {
+            if (IsAlive)
+            {
+                IsAlive = false;
+                OnPlayerDied?.Invoke();
             }
         }
     }

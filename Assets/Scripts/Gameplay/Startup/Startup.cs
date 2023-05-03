@@ -6,13 +6,13 @@ namespace Startup
 {
     public class Startup : MonoBehaviour
     {
-        [SerializeField] private GameplayStateMachine _gameplayStateMachine;
+        [SerializeField] private StateMachine _levelStateMachine;
 
         private void Start()
         {
-            _gameplayStateMachine.Initialize();
+            _levelStateMachine.Initialize();
 
-            _gameplayStateMachine.ChangeState<StartState>();
+            _levelStateMachine.ChangeState<StartState>();
         }
     }
 }

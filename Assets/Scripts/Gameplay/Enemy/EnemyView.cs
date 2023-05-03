@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UI;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -17,10 +18,14 @@ namespace Enemy
 
     public class EnemyView : MonoBehaviour
     {
+        private static readonly int Velocity = Animator.StringToHash("Velocity");
+
         public event Action<EnemyView, Collider> OnHit;
 
         [SerializeField] private Animator _animator;
         [SerializeField] private HealthBar _healthBar;
+        [SerializeField] private NavMeshAgent _navMeshAgent;
+
         public HealthBar HealthBar => _healthBar;
 
         private RagDollPartView[] _ragDollParts;
@@ -64,6 +69,11 @@ namespace Enemy
             }
         }
 
+        private void Update()
+        {
+            _animator.SetFloat(Velocity, _navMeshAgent.velocity.magnitude);
+        }
+
         private void OnDestroy()
         {
             foreach (var bodyPart in _ragDollParts)
@@ -72,12 +82,27 @@ namespace Enemy
             }
         }
 
+        public void MoveTo(Vector3 position)
+        {
+            _navMeshAgent.SetDestination(position);
+        }
+
+        public void StopMovement()
+        {
+            _navMeshAgent.isStopped = true;
+        }
+
+        public void ResumeMovement()
+        {
+            _navMeshAgent.isStopped = false;
+        }
+
         public void PlayDeathAnimation()
         {
             FromAnimationToRagDoll();
 
             _animator.enabled = false;
-
+            StopMovement();
             SetRagDollRigidBodiesKinematic(false);
         }
 
@@ -93,7 +118,11 @@ namespace Enemy
                 sequence.Join(bodyPart.Transform.DOLocalRotate(bodyPart.LocalRotation.eulerAngles, reviveDuration));
             }
 
-            await sequence.AwaitForComplete().ContinueWith(() => _animator.enabled = true);
+            await sequence.AwaitForComplete().ContinueWith(() =>
+            {
+                _animator.enabled = true;
+                ResumeMovement();
+            });
         }
 
         public void SetHealthBarValue(int currentHealth)
