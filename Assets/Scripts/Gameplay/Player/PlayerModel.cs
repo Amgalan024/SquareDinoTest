@@ -53,6 +53,7 @@ namespace Player
             {
                 IsAlive = false;
                 OnPlayerDied?.Invoke();
+                Debug.Log("Player Killed");
             }
         }
     }

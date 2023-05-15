@@ -55,7 +55,7 @@ namespace Enemy
 
             if (otherCollider.attachedRigidbody.TryGetComponent(out PlayerModel playerModel))
             {
-                
+                playerModel.KillPlayer();
             }
         }
 

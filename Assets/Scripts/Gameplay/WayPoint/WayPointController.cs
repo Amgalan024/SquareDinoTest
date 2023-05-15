@@ -20,9 +20,10 @@ namespace WayPoint
 
         private void HandleDestinationZoneEnter(Collider otherCollider)
         {
-            if (otherCollider.attachedRigidbody.GetComponent<PlayerModel>())
+            if (otherCollider.attachedRigidbody != null && otherCollider.attachedRigidbody.GetComponent<PlayerModel>())
             {
                 _wayPointModel.InvokePlayerArriving();
+                _wayPointView.DestinationCollider.enabled = false;
             }
         }
 

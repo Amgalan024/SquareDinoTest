@@ -21,10 +21,9 @@ namespace Gameplay.Player.Controllers
 
         private void HandlePlayerHit(Collider otherCollider)
         {
-            if (otherCollider.GetComponent<EnemyModel>())
+            if (otherCollider.GetComponent<RagDollPartView>())
             {
                 _playerModel.KillPlayer();
-                Debug.Log("Player Killed");
             }
         }
     }
